@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+
+  app_intra_sf4:
+    build: docker
+    container_name: app_intra_sf4
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ".:/var/www/html"
+    links:
+      - db_intra_sf4:db
+      - phpmyadmin_intra_sf4:phpmyadmin
+    environment:
+      TYPE_ENVIRONNEMENT: dev
+      APP_ENV: dev
+      APP_SECRET: 122a2e4d3b1a1a28cd1f8a5c3ca1860e
+      DATABASE_URL: mysql://intra:intra@db/intra
+
+  db_intra_sf4:
+      image: mysql:5.6
+      container_name: db_intra_sf4
+      ports:
+        - "3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: "intra"
+        MYSQL_USER: "intra"
+        MYSQL_PASSWORD: "intra"
+        MYSQL_DATABASE: "intra"
+
+  phpmyadmin_intra_sf4:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin_intra_sf4
+      environment:
+        - "PMA_ARBITRARY=1"
+        - "PMA_HOST=db"
+        - "PMA_USER=root"
+        - "PMA_PASSWORD=intra"
+      ports:
+        - 8083:80
+      links:
+        - db_intra_sf4:db
+
