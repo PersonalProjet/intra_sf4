@@ -1,0 +1,16 @@
+hwi_oauth:
+    firewall_names: [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook: facebookID
+    connect:
+        account_connector: app.user.provider.fosuser
+    resource_owners:
+        facebook:
+            type: facebook
+            client_id: 373242119780914
+            client_secret: 8ec9d569682dcc65e8367d0bd8baea9e
+            options:
+                display: popup #dialog is optimized for popup window
+                auth_type: rerequest # Re-asking for Declined Permissions
