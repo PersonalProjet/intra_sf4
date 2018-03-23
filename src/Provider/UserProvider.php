@@ -41,7 +41,8 @@ class UserProvider extends FOSUBUserProvider
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username = $response->getUsername();
-        $datas = $response->getResponse();
+        $datas['first_name'] = $response->getRealName();
+        $datas['email'] = $response->getEmail();
         $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
 
         //when the user is registrating
@@ -59,8 +60,8 @@ class UserProvider extends FOSUBUserProvider
 
             //I have set all requested data with the user's username
             //modify here with relevant data
-            $user->setUsername($datas['first_name']);
-            $user->setEmail($datas['email']);
+            $user->setUsername($response->getFirstName());
+            $user->setEmail($response->getEmail());
             $user->setPassword($username);
             $user->setEnabled(true);
             $user->setPicture($this->getPathImageProfil($username));

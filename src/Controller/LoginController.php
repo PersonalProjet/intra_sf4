@@ -17,11 +17,18 @@ class LoginController extends Controller
     {
         $securityContext = $container->get('security.authorization_checker');
         if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $response = $this->forward('AppBanqueBundle:Home:index');
+            $response = $this->forward('App\Controller\LoginController::home');
         } else {
-            $response = $twig->render('HWIOAuthBundle:Connect:login.html.twig');
+            $response = $twig->render('login/index.html.twig');
         }
         return new Response($response);
+    }
+
+    /**
+     * @Route("/logout", name="logout_page")
+     */
+    public function logout()
+    {
     }
 
     /**

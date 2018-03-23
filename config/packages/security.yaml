@@ -14,7 +14,9 @@ security:
         main:
             pattern: ^/
             anonymous: true
-            logout: true
+            logout:
+                path: /logout
+                target: /
             oauth:
                 resource_owners:
                     facebook: "/login/check-facebook"
