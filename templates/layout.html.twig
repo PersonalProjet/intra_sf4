@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="wrapper">
+
+    <div class="sidebar" data-color="rose" data-background-color="black" data-image="{{ asset('img/sidebar-1.jpg') }}">
+        <div class="logo">
+            <a href="{{ path('home_index') }}" class="simple-text logo-mini">
+                <i class="fab fa-themeisle fa-2x"></i>
+            </a>
+
+            <a href="{{ path('home_index') }}" class="simple-text logo-normal">
+                Intra
+            </a>
+
+        </div>
+
+        <div class="sidebar-wrapper">
+            <div class="user">
+                <div class="photo">
+                    <img src="{{ app.user.picture }}" />
+                </div>
+                <div class="user-info">
+                    <a href="{{ path('logout_page') }}" class="username">
+                    <span>
+                       {{ app.user.username }} <i class="fas fa-sign-out-alt"></i>
+                    </span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav">
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="../dashboard.html">
+                        <i class="material-icons">dashboard</i>
+                        <p> Dashboard </p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
+                        <i class="material-icons">image</i>
+                        <p> Pages
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+
+                    <div class="collapse" id="pagesExamples">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="../pages/pricing.html">
+                                    <span class="sidebar-mini"> P </span>
+                                    <span class="sidebar-normal"> Pricing </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar-background" style="background-image: url({{ asset('img/sidebar-1.jpg') }}) "></div>
+
+    <div class="main-panel">
+        <section class="content">
+            <div class="container-fluid">
+                {% block body_layout %}{% endblock %}
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

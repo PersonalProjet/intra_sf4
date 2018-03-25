@@ -65,6 +65,7 @@ class UserProvider extends FOSUBUserProvider
             $user->setPassword($username);
             $user->setEnabled(true);
             $user->setPicture($this->getPathImageProfil($username));
+            $user->setRoles(['ROLE_USER']);
             $this->userManager->updateUser($user);
 
             return $user;
