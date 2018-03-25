@@ -1,0 +1,15 @@
+.card-login i
+{
+    overflow: auto;
+    display: initial;
+}
+
+.sidebar .user .photo
+{
+    margin-top: -5px;
+}
+
+.sidebar .logo a.logo-mini
+{
+    width: 40px;
+}

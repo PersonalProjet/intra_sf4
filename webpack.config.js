@@ -40,6 +40,16 @@ Encore
         './assets/material/css/material-dashboard.css'
     ])
 
+    // uncomment to define the assets of the project
+    .addEntry('app', [
+        // JS
+        'jquery',
+        './assets/js/app.js',
+
+        // CSS
+        './assets/css/app.css'
+    ])
+
     // uncomment for legacy applications that require $/jQuery as a global variable
     .autoProvidejQuery()
 
