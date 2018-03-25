@@ -9,41 +9,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                            <form action="#" method="post">
-                                <div class="card card-login">
-                                    <div class="card-header text-center" data-background-color="blue">
-                                        <h4 class="card-title">Connexion</h4>
-                                    </div>
-
-                                    <div class="card-content">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">face</i>
-                                            </span>
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Login</label>
-                                                <input type="text" name="_username" value="#" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">lock_outline</i>
-                                            </span>
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Password</label>
-                                                <input type="password" name="_password" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        {#% if csrf_token %}
-                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                                        {% endif %#}
-                                    </div>
-                                    <div class="footer text-center">
-                                        <button type="submit" class="btn btn-primary btn-simple btn-wd btn-lg">Connexion</button>
-                                    </div>
+                            <div class="card card-login">
+                                <div class="card-header text-center" data-background-color="blue">
+                                    <h4 class="card-title">Connexion</h4>
                                 </div>
-                            </form>
+                                <div class="footer text-center">
+                                    <a href="{{ hwi_oauth_login_url('facebook') }}" class="btn btn-primary btn-simple btn-wd btn-lg">Connexion via Facebook</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
