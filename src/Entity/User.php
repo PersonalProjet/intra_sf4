@@ -40,6 +40,23 @@ class User extends BaseUser
     protected $picture;
 
     /**
+     * @var Banque
+     *
+     * @ORM\ManyToMany(targetEntity="Banque")
+     * @ORM\JoinTable(name="user_banque",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="banque_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $banque;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->banque = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -153,5 +170,37 @@ class User extends BaseUser
     public function isEnabled()
     {
         return true;
+    }
+
+    /**
+     * Add banque
+     *
+     * @param User $banque
+     *
+     * @return User
+     */
+    public function addBanque(User $banque)
+    {
+        $this->banque[] = $banque;
+
+        return $this;
+    }
+    /**
+     * Remove banque
+     *
+     * @param User $banque
+     */
+    public function removeBanque(User $banque)
+    {
+        $this->banque->removeElement($banque);
+    }
+    /**
+     * Get banque
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBanque()
+    {
+        return $this->banque;
     }
 }
