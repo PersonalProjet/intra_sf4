@@ -1,4 +1,4 @@
-FROM php:7.0-apache
+FROM php:7.2-apache
 
 RUN systemMods=" \
         net-tools \
@@ -15,7 +15,6 @@ RUN systemMods=" \
         htop \
         git \
         graphicsmagick \
-        python-software-properties \
         apache2 \
         apache2-utils \
     " \
@@ -23,6 +22,17 @@ RUN systemMods=" \
     && apt-get install -y $systemMods \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN pecl install xdebug && \
+    docker-php-ext-enable xdebug && \
+
+    # opcache setup
+    docker-php-ext-configure opcache --enable-opcache && \
+    docker-php-ext-install opcache && \
+
+    # APCu
+    pecl install apcu && \
+    docker-php-ext-enable apcu
 
 # PDO
 RUN docker-php-ext-install pdo pdo_mysql

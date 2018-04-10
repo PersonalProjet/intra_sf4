@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Banque
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -17,39 +20,63 @@ class Banque
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @return mixed
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Compte", mappedBy="banque")
      */
-    public function getId()
+    private $compte;
+
+    /**
+     * Banque constructor.
+     */
+    public function __construct() {
+        $this->compte = new ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param mixed $id
+     * @return string
      */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCompte(): ArrayCollection
+    {
+        return $this->compte;
+    }
+
+    /**
+     * @param ArrayCollection $compte
+     */
+    public function setCompte(ArrayCollection $compte)
+    {
+        $this->compte = $compte;
     }
 }
