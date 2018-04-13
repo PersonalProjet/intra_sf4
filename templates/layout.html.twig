@@ -38,8 +38,15 @@
                 </li>
 
                 <li class="nav-item ">
+                    <a class="nav-link" href="{{ path('prelevement_index') }}">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <p>Gerer les prélevements</p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
                     <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
-                        <i class="fas fa-wrench fa-3x"></i>
+                        <i class="fas fa-wrench fa-1x"></i>
                         <p> Administration
                             <b class="caret"></b>
                         </p>
@@ -47,6 +54,12 @@
 
                     <div class="collapse" id="pagesExamples">
                         <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ path('user_banque_new') }}">
+                                    <span class="sidebar-mini"> UB </span>
+                                    <span class="sidebar-normal"> Associer User / Banque </span>
+                                </a>
+                            </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ path('banque_index') }}">
                                     <span class="sidebar-mini"> AB </span>

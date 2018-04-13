@@ -2,22 +2,21 @@
 
 namespace App\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Banque;
-use App\Entity\Compte;
 
-class CompteType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
+class UserBanqueType extends AbstractType
+{public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('banque', EntityType::class, [
+            ->add('name', EntityType::class, [
                 'class' => Banque::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'attr' => ['class' => 'select2'],
+                'multiple' => true,
             ])
         ;
     }
@@ -25,7 +24,7 @@ class CompteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Compte::class,
+            'data_class' => null,
         ]);
     }
 }

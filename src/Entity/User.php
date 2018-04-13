@@ -47,7 +47,7 @@ class User extends BaseUser
     /**
      * @var Banque
      *
-     * @ORM\ManyToMany(targetEntity="Banque")
+     * @ORM\ManyToMany(targetEntity="Banque", inversedBy="user", cascade={"persist"})
      * @ORM\JoinTable(name="user_banque",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="banque_id", referencedColumnName="id")}
@@ -184,12 +184,13 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addBanque(Banque $banque) : Banque
+    public function addBanque(Banque $banque) : User
     {
-        $this->banque[] = $banque;
+        $this->banque->add($banque);
 
         return $this;
     }
+
     /**
      * Remove banque
      *

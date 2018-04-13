@@ -50,6 +50,16 @@ Encore
         './assets/css/app.css'
     ])
 
+    // uncomment to define the assets of the project
+    .addEntry('select2', [
+        // JS
+        'jquery',
+        './assets/select2/select2.min.js',
+
+        // CSS
+        './assets/select2/select2.min.css'
+    ])
+
     // uncomment for legacy applications that require $/jQuery as a global variable
     .autoProvidejQuery()
 

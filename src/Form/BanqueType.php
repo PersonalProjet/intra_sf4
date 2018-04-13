@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Banque;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Banque;
 
 class BanqueType extends AbstractType
 {

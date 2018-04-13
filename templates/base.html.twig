@@ -4,9 +4,10 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('assets/material.css') }}">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('assets/select2.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
     </head>
     <body {% block body_class %}{% endblock %}>
@@ -14,6 +15,7 @@
 
         <script type="text/javascript" src="{{ asset('assets/manifest.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/material.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/select2.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/app.js') }}"></script>
     </body>
 </html>

@@ -80,6 +80,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "nikic/php-parser": {
+        "version": "v4.0.1"
+    },
     "ocramius/package-versions": {
         "version": "1.2.0"
     },
@@ -170,9 +173,6 @@
     "symfony/cache": {
         "version": "v3.4.1"
     },
-    "symfony/class-loader": {
-        "version": "v3.4.1"
-    },
     "symfony/config": {
         "version": "v3.4.1"
     },
@@ -251,22 +251,13 @@
     "symfony/orm-pack": {
         "version": "v1.0.5"
     },
-    "symfony/polyfill-apcu": {
-        "version": "v1.6.0"
-    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
     },
-    "symfony/polyfill-php56": {
-        "version": "v1.7.0"
-    },
-    "symfony/polyfill-php70": {
-        "version": "v1.6.0"
-    },
-    "symfony/polyfill-util": {
+    "symfony/polyfill-php72": {
         "version": "v1.7.0"
     },
     "symfony/profiler-pack": {

@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Edit Prelevement{% endblock %}
+
+{% block body_layout %}
+    <h1>Edit Prelevement</h1>
+
+    {{ include('_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('prelevement_index') }}">back to list</a>
+
+    {{ include('_delete_form.html.twig', {'id': prelevement.id}) }}
+{% endblock %}

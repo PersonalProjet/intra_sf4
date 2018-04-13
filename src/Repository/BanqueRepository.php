@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Banque;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\Banque;
 
 class BanqueRepository extends ServiceEntityRepository
 {
@@ -13,16 +14,14 @@ class BanqueRepository extends ServiceEntityRepository
         parent::__construct($registry, Banque::class);
     }
 
-    /*
-    public function findBySomething($value)
+    public function findBanqueByUser($id)
     {
         return $this->createQueryBuilder('b')
-            ->where('b.something = :value')->setParameter('value', $value)
+            ->innerJoin('b.user', 'user')
+            ->where('user = :value')->setParameter('value', $id)
             ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 }

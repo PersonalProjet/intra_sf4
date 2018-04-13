@@ -1,3 +1,8 @@
+.main-panel>.content
+{
+    margin-top: auto;
+}
+
 .card-login i
 {
     overflow: auto;
