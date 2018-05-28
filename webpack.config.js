@@ -1,43 +1,36 @@
 var Encore = require('@symfony/webpack-encore');
-var webpack = require('webpack');
+var path = require('path');
+var CopyWebpackPlugin  = require('copy-webpack-plugin');
 
 Encore
     .setOutputPath('public/assets/')
     .setPublicPath('/assets')
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
-    // uncomment to create hashed filenames (e.g. app.abc123.css)
-    // .enableVersioning(Encore.isProduction())
+    .enableVersioning(Encore.isProduction())
 
-    // uncomment to define the assets of the project
     .createSharedEntry('material', [
-        // JS
         'jquery',
-        './assets/material/js/01_bootstrap.min.js',
-        './assets/material/js/02_material.min.js',
-        './assets/material/js/03_perfect-scrollbar.jquery.min.js',
-        './assets/material/js/05_core.js',
-        './assets/material/js/06_arrive.min.js',
-        './assets/material/js/07_jquery.validate.min.js',
-        './assets/material/js/08_moment.min.js',
-        './assets/material/js/09_chartist.min.js',
-        './assets/material/js/10_jquery.bootstrap-wizard.js',
-        './assets/material/js/11_bootstrap-notify.js',
-        './assets/material/js/12_jquery.sharrre.js',
-        './assets/material/js/13_bootstrap-datetimepicker.js',
-        './assets/material/js/14_jquery-jvectormap.js',
-        './assets/material/js/15_nouislider.min.js',
-        './assets/material/js/16_jquery.select-bootstrap.js',
-        './assets/material/js/17_jquery.datatables.js',
-        './assets/material/js/18_sweetalert2.js',
-        './assets/material/js/19_jasny-bootstrap.min.js',
-        './assets/material/js/20_fullcalendar.min.js',
-        './assets/material/js/21_jquery.tagsinput.js',
-        './assets/material/js/22_material-dashboard.js',
+        './assets/vendor/material-dashboard/js/core/popper.min.js',
+        './assets/vendor/material-dashboard/js/bootstrap-material-design.js',
+        './assets/vendor/material-dashboard/js/plugins/moment.min.js',
+        './assets/vendor/material-dashboard/js/plugins/bootstrap-selectpicker.js',
+        './assets/vendor/material-dashboard/js/plugins/bootstrap-tagsinput.js',
+        './assets/vendor/material-dashboard/js/plugins/jasny-bootstrap.min.js',
+        './assets/vendor/material-dashboard/js/plugins/arrive.min.js',
+        './assets/vendor/material-dashboard/js/plugins/jquery.validate.min.js',
+        './assets/vendor/material-dashboard/js/plugins/bootstrap-notify.js',
+        './assets/vendor/material-dashboard/js/plugins/jquery-jvectormap.js',
+        './assets/vendor/material-dashboard/js/plugins/nouislider.min.js',
+        './assets/vendor/material-dashboard/js/plugins/jquery.select-bootstrap.js',
+        './assets/vendor/material-dashboard/js/plugins/jquery.datatables.js',
+        './assets/vendor/material-dashboard/js/plugins/perfect-scrollbar.jquery.min.js',
+        './assets/vendor/material-dashboard/js/plugins/sweetalert2.js',
+        './assets/vendor/material-dashboard/js/plugins/bootstrap-datetimepicker.min.js',
+        './assets/vendor/material-dashboard/js/material-dashboard.js?v=2.0.1',
 
         // CSS
-        './assets/material/css/bootstrap.min.css',
-        './assets/material/css/material-dashboard.css'
+        './assets/vendor/material-dashboard/scss/material-dashboard.scss'
     ])
 
     // uncomment to define the assets of the project
@@ -50,19 +43,25 @@ Encore
         './assets/css/app.css'
     ])
 
-    // uncomment to define the assets of the project
-    .addEntry('select2', [
-        // JS
-        'jquery',
-        './assets/select2/select2.min.js',
+    // SASS and COMPASS
+    .enableSassLoader(function(options) {
+        options.includePaths = [
+            path.resolve(__dirname, './node_modules/compass-mixins/lib')
+        ];
+    })
 
-        // CSS
-        './assets/select2/select2.min.css'
-    ])
-
-    // uncomment for legacy applications that require $/jQuery as a global variable
     .autoProvidejQuery()
 
-    ;
+    .autoProvideVariables({
+        Popper: ['popper.js', 'default']
+    })
+
+    /*.addPlugin(new CopyWebpackPlugin([
+        { from: './assets/img', to: 'img' }
+    ]))*/
+
+    .configureUglifyJsPlugin(function(options) {
+
+    });
 
 module.exports = Encore.getWebpackConfig();

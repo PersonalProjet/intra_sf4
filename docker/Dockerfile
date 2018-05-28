@@ -43,6 +43,26 @@ RUN cd $HOME && \
     chmod +x composer.phar && \
     mv composer.phar /usr/local/bin/composer
 
+# Install yarn + nodejs
+RUN apt-get update
+RUN apt-get install -y gnupg gnupg2 gnupg1
+RUN apt-get install -y gnupg gnupg2 gnupg1
+RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+RUN apt-get install -y nodejs
+RUN rm nodesource_setup.sh
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install yarn
+
+# Install Ruby + SASS + Compass
+RUN apt-get update
+RUN apt-get install ruby-full -y
+RUN apt-get install ruby-ffi -y
+RUN gem install --no-rdoc --no-ri sass -v 3.4.22
+RUN gem install --no-rdoc --no-ri compass
+
 COPY ./intra.conf /etc/apache2/sites-available/
 COPY ./custom.ini /etc/php7/mods-available/custom.ini
 COPY ./run.sh /run.sh

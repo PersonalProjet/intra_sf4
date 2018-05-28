@@ -90,18 +90,8 @@ class UserProvider extends FOSUBUserProvider
      */
     private function getPathImageProfil($id)
     {
-        $url = 'http://graph.facebook.com/v2.10/'.$id.'/picture?redirect=false&type=large';
-        $curl = curl_init($url);
+        $url = 'http://graph.facebook.com/'.$id.'/picture?type=large';
 
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_COOKIESESSION, true);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-
-        $return = curl_exec($curl);
-        $response = json_decode($return, true);
-
-        return $response['data']['url'];
+        return $url;
     }
 }
