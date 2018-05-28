@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -15,6 +16,7 @@ class User extends BaseUser
 {
     /**
      * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -23,26 +25,46 @@ class User extends BaseUser
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $facebookID;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="facebook_access_token", type="text")
      */
     protected $facebook_access_token;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="picture", type="text")
      */
     protected $picture;
 
     /**
+     * @var Banque
+     *
+     * @ORM\ManyToMany(targetEntity="Banque", inversedBy="user", cascade={"persist"})
+     * @ORM\JoinTable(name="user_banque",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="banque_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $banque;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->banque = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId($id) : int
     {
         $this->id = $id;
     }
@@ -50,7 +72,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getFacebookID()
+    public function getFacebookID() : string
     {
         return $this->facebookID;
     }
@@ -58,7 +80,7 @@ class User extends BaseUser
     /**
      * @param string $facebookID
      */
-    public function setFacebookID($facebookID)
+    public function setFacebookID(string $facebookID)
     {
         $this->facebookID = $facebookID;
     }
@@ -66,7 +88,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getFacebookAccessToken()
+    public function getFacebookAccessToken() : string
     {
         return $this->facebook_access_token;
     }
@@ -74,7 +96,7 @@ class User extends BaseUser
     /**
      * @param string $facebook_access_token
      */
-    public function setFacebookAccessToken($facebook_access_token)
+    public function setFacebookAccessToken(string $facebook_access_token)
     {
         $this->facebook_access_token = $facebook_access_token;
     }
@@ -82,7 +104,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getPicture()
+    public function getPicture() : string
     {
         return $this->picture;
     }
@@ -90,7 +112,7 @@ class User extends BaseUser
     /**
      * @param string $picture
      */
-    public function setPicture($picture)
+    public function setPicture(string $picture)
     {
         $this->picture = $picture;
     }
@@ -105,7 +127,7 @@ class User extends BaseUser
      *
      * @see AccountExpiredException
      */
-    public function isAccountNonExpired()
+    public function isAccountNonExpired() : bool
     {
         return true;
     }
@@ -120,7 +142,7 @@ class User extends BaseUser
      *
      * @see LockedException
      */
-    public function isAccountNonLocked()
+    public function isAccountNonLocked() : bool
     {
         return true;
     }
@@ -135,7 +157,7 @@ class User extends BaseUser
      *
      * @see CredentialsExpiredException
      */
-    public function isCredentialsNonExpired()
+    public function isCredentialsNonExpired() : bool
     {
         return true;
     }
@@ -150,8 +172,42 @@ class User extends BaseUser
      *
      * @see DisabledException
      */
-    public function isEnabled()
+    public function isEnabled() : bool
     {
         return true;
+    }
+
+    /**
+     * Add banque
+     *
+     * @param Banque $banque
+     *
+     * @return User
+     */
+    public function addBanque(Banque $banque) : User
+    {
+        $this->banque->add($banque);
+
+        return $this;
+    }
+
+    /**
+     * Remove banque
+     *
+     * @param Banque $banque
+     */
+    public function removeBanque(Banque $banque)
+    {
+        $this->banque->removeElement($banque);
+    }
+
+    /**
+     * Get banque
+     *
+     * @return Collection
+     */
+    public function getBanque() : Collection
+    {
+        return $this->banque;
     }
 }

@@ -2,28 +2,25 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
 
-class LoginController extends Controller
+class LoginController extends AbstractController
 {
     /**
      * @Route("/login", name="login_page")
      */
-    public function indexAction(Environment $twig, ContainerInterface $container)
+    public function indexAction()
     {
-        $securityContext = $container->get('security.authorization_checker');
+        $securityContext = $this->container->get('security.authorization_checker');
 
         if ($securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $response = $this->forward(HomeController::class.'::index');
+            $response = $this->redirectToRoute('home_index');
         } else {
-            $response = $twig->render('login/index.html.twig');
+            $response = $this->render('login/index.html.twig');
         }
 
-        return new Response($response);
+        return $response;
     }
 
     /**

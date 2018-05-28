@@ -1,6 +1,7 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.17.1"
+        "@symfony/webpack-encore": "^0.17.0",
+        "copy-webpack-plugin": "^4.5.1"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -11,8 +12,26 @@
         "build": "encore production"
     },
     "dependencies": {
+        "child_process": "^1.0.2",
+        "compass": "^0.1.1",
+        "compass-mixins": "^0.12.10",
         "datatables.net": "^1.10.16",
-        "jquery": "^3.2.1",
-        "moment": "^2.20.1"
+        "datatables.net-bs4": "^1.10.16",
+        "datatables.net-responsive": "^2.2.1",
+        "fs": "^0.0.1-security",
+        "jquery": "^3.3.1",
+        "material": "^0.2.6",
+        "moment": "^2.22.0",
+        "net": "^1.0.2",
+        "node-sass": "^4.8.3",
+        "popper": "^1.0.1",
+        "popper.js": "^1.14.3",
+        "react": "^16.3.1",
+        "react-dom": "^16.3.1",
+        "rijs": "^0.9.1",
+        "rijs.npm": "^2.0.0",
+        "sass-loader": "^6.0.7",
+        "select2": "^4.0.6-rc.1",
+        "tls": "^0.0.1"
     }
 }
