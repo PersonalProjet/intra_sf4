@@ -17,13 +17,10 @@
 
         <div class="sidebar-wrapper">
             <div class="user">
-                <div class="photo">
-                    <img src="{{ app.user.picture }}" />
-                </div>
                 <div class="user-info">
-                    <a href="{{ path('logout_page') }}" class="username">
+                    <a href="{{ path('logout') }}" class="username">
                     <span>
-                       {{ app.user.username }} <i class="fas fa-sign-out-alt"></i>
+                       {{ app.user.firstname }} {{ app.user.secondname }} <i class="fas fa-sign-out-alt"></i>
                     </span>
                     </a>
                 </div>
