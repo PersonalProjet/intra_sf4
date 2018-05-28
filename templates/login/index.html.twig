@@ -8,14 +8,42 @@
             <div class="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        <div class="col-md-4 col-sm-6 ml-auto mr-auto">
                             <div class="card card-login">
-                                <div class="card-header text-center" data-background-color="blue">
-                                    <h4 class="card-title">Connexion</h4>
+                                <div class="card-header card-header-info text-center">
+                                    <h4 class="card-title">{% block form_user_title %}Connexion{% endblock %}</h4>
                                 </div>
-                                <div class="footer text-center">
-                                    <a href="{{ hwi_oauth_login_url('facebook') }}" class="btn btn-fill btn-rose"><i class="fab fa-facebook-square fa-2x"></i></a>
+                                <div class="card-body ">
+                                {% block form_user %}
+                                    <form action="{{ path('login') }}" method="post">
+                                    <span class="bmd-form-group">
+                                        <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">face</i>
+                                            </span>
+                                            </div>
+                                            <input type="text" name="_username" id="username" class="form-control" placeholder="Nom Utilisateur">
+                                        </div>
+                                    </span>
+                                    <span class="bmd-form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">lock_outline</i>
+                                                </span>
+                                            </div>
+                                            <input type="password" name="_password" id="password" class="form-control" placeholder="Mot de passe">
+                                        </div>
+                                    </span>
                                 </div>
+                                <div class="card-footer justify-content-center">
+                                    <button type="submit" href="{{ path('login') }}" class="btn btn-info btn-lg">Let's GO</button>
+                                </form>
+                                </div>
+                                <hr>
+                                <div class="ml-auto mr-auto"><a href="{{ path('user_registration') }}" class="btn btn-info btn-link btn-lg">Création User</a></div>
+                                {% endblock %}
                             </div>
                         </div>
                     </div>

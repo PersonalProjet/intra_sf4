@@ -2,47 +2,75 @@
 
 namespace App\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
+ * @UniqueEntity(fields="username", message="Username already taken")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User extends BaseUser
+class User implements UserInterface, \Serializable
 {
     /**
-     * @var int
-     *
-     * @ORM\Id
      * @ORM\Column(type="integer")
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=25, unique=true)
      */
-    protected $facebookID;
+    private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="facebook_access_token", type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=25, unique=true)
      */
-    protected $facebook_access_token;
+    private $firstname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="picture", type="text")
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=25, unique=true)
      */
-    protected $picture;
+    private $secondname;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array")
+     */
+    private $roles;
+
 
     /**
      * @var Banque
@@ -57,124 +85,161 @@ class User extends BaseUser
 
     public function __construct()
     {
-        parent::__construct();
+        $this->isActive = true;
+        $this->roles = array('ROLE_USER');
         $this->banque = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * @param int $id
      */
-    public function setId($id) : int
+    public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getFacebookID() : string
+    public function getFirstname(): ?string
     {
-        return $this->facebookID;
+        return $this->firstname;
     }
 
     /**
-     * @param string $facebookID
+     * @param string $firsname
      */
-    public function setFacebookID(string $facebookID)
+    public function setFirstname(string $firstname): self
     {
-        $this->facebookID = $facebookID;
-    }
+        $this->firstname = $firstname;
 
-    /**
-     * @return string
-     */
-    public function getFacebookAccessToken() : string
-    {
-        return $this->facebook_access_token;
-    }
-
-    /**
-     * @param string $facebook_access_token
-     */
-    public function setFacebookAccessToken(string $facebook_access_token)
-    {
-        $this->facebook_access_token = $facebook_access_token;
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getPicture() : string
+    public function getSecondname(): ?string
     {
-        return $this->picture;
+        return $this->secondname;
     }
 
     /**
-     * @param string $picture
+     * @param string $secondname
      */
-    public function setPicture(string $picture)
+    public function setSecondname(string $secondname): self
     {
-        $this->picture = $picture;
+        $this->secondname = $secondname;
+
+        return $this;
     }
 
     /**
-     * Checks whether the user's account has expired.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw an AccountExpiredException and prevent login.
-     *
-     * @return bool true if the user's account is non expired, false otherwise
-     *
-     * @see AccountExpiredException
+     * @return string
      */
-    public function isAccountNonExpired() : bool
+    public function getUsername(): ?string
     {
-        return true;
+        return $this->username;
     }
 
     /**
-     * Checks whether the user is locked.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a LockedException and prevent login.
-     *
-     * @return bool true if the user is not locked, false otherwise
-     *
-     * @see LockedException
+     * @param string $username
      */
-    public function isAccountNonLocked() : bool
+    public function setUsername(string $username)
     {
-        return true;
+        $this->username = $username;
     }
 
     /**
-     * Checks whether the user's credentials (password) has expired.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a CredentialsExpiredException and prevent login.
-     *
-     * @return bool true if the user's credentials are non expired, false otherwise
-     *
-     * @see CredentialsExpiredException
+     * @return string
      */
-    public function isCredentialsNonExpired() : bool
+    public function getPassword(): ?string
     {
-        return true;
+        return $this->password;
     }
 
     /**
-     * Checks whether the user is enabled.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a DisabledException and prevent login.
-     *
-     * @return bool true if the user is enabled, false otherwise
-     *
-     * @see DisabledException
+     * @param string $password
      */
-    public function isEnabled() : bool
+    public function setPassword(string $password): self
     {
-        return true;
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 
     /**
@@ -209,5 +274,25 @@ class User extends BaseUser
     public function getBanque() : Collection
     {
         return $this->banque;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
