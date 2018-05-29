@@ -77,7 +77,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var Compte
      *
-     * @ORM\ManyToMany(targetEntity="Compte", inversedBy="user", cascade={"persist"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Compte", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinTable(name="user_compte",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="compte_id", referencedColumnName="id")}

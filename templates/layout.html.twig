@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block body_class %}class="sidebar-mini"{% endblock %}
+
 {% block body %}
     <div class="wrapper">
 
@@ -8,19 +10,20 @@
             <a href="{{ path('home_index') }}" class="simple-text logo-mini">
                 <i class="fab fa-themeisle fa-2x"></i>
             </a>
-
             <a href="{{ path('home_index') }}" class="simple-text logo-normal">
                 Intra
             </a>
-
         </div>
 
         <div class="sidebar-wrapper">
             <div class="user">
+                <div class="photo">
+                    <span>{{ app.user.firstname|first|capitalize }}{{ app.user.secondname|first|capitalize }}</span>
+                </div>
                 <div class="user-info">
                     <a href="{{ path('logout') }}" class="username">
                     <span>
-                       {{ app.user.firstname }} {{ app.user.secondname }} <i class="fas fa-sign-out-alt"></i>
+                       {{ app.user.firstname }} {{ app.user.secondname }} <i class="fas fa-sign-out-alt float-right"></i>
                     </span>
                     </a>
                 </div>
