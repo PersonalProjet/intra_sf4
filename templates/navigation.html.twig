@@ -1,0 +1,23 @@
+{% for name, banque in banques %}
+<li class="nav-item ">
+    <a class="nav-link" data-toggle="collapse" href="#{{ name|slice(0,3) }}">
+        <i class="fas fa-university fa-1x"></i>
+        <p> {{ name }}
+            <b class="caret"></b>
+        </p>
+    </a>
+
+    <div class="collapse" id="{{ name|slice(0,3) }}">
+        <ul class="nav">
+            {% for compte in banque %}
+            <li class="nav-item ">
+                <a class="nav-link" href="#">
+                    <span class="sidebar-mini"> {{ compte.id }} </span>
+                    <span class="sidebar-normal"> {{ compte.lib }} </span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</li>
+{% endfor %}

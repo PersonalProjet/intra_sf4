@@ -30,12 +30,7 @@
             </div>
             <ul class="nav">
 
-                <li class="nav-item ">
-                    <a class="nav-link" href="../dashboard.html">
-                        <i class="material-icons">dashboard</i>
-                        <p> Dashboard </p>
-                    </a>
-                </li>
+                {{ render(controller('App\\Controller\\HomeController::navigation')) }}
 
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ path('prelevement_index') }}">
@@ -45,14 +40,14 @@
                 </li>
 
                 <li class="nav-item ">
-                    <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
+                    <a class="nav-link" data-toggle="collapse" href="#admin">
                         <i class="fas fa-wrench fa-1x"></i>
                         <p> Administration
                             <b class="caret"></b>
                         </p>
                     </a>
 
-                    <div class="collapse" id="pagesExamples">
+                    <div class="collapse" id="admin">
                         <ul class="nav">
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ path('user_compte_new') }}">
