@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Edit Compte{% endblock %}
+
+{% block body_layout %}
+    <h1>Association User / Compte</h1>
+
+    {% for compte in comptes %}
+        {{ compte.name }} - {{ compte.banque.name }}
+    {% endfor %}
+
+    {{ include('_form.html.twig') }}
+{% endblock %}
