@@ -6,6 +6,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 class User implements UserInterface, \Serializable
 {
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -71,33 +74,30 @@ class User implements UserInterface, \Serializable
      */
     private $roles;
 
-
     /**
-     * @var Banque
+     * @var Compte
      *
-     * @ORM\ManyToMany(targetEntity="Banque", inversedBy="user", cascade={"persist"})
-     * @ORM\JoinTable(name="user_banque",
+     * @ORM\ManyToMany(targetEntity="Compte", inversedBy="user", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinTable(name="user_compte",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="banque_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="compte_id", referencedColumnName="id")}
      *      )
      */
-    protected $banque;
+    private $compte;
 
     public function __construct()
     {
         $this->isActive = true;
         $this->roles = array('ROLE_USER');
-        $this->banque = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->compte = new ArrayCollection();
     }
 
     /**
-     * @param int $id
+     * @return int
      */
-    public function setId($id): self
+    public function getId(): int
     {
-        $this->id = $id;
-
-        return $this;
+        return $this->id;
     }
 
     /**
@@ -171,9 +171,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->isActive;
     }
@@ -189,20 +189,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Returns the roles granted to the user.
-     *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return (Role|string)[] The user roles
+     * @return (Role|string)[]
      */
     public function getRoles(): array
     {
@@ -217,6 +204,64 @@ class User implements UserInterface, \Serializable
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * Add banque
+     *
+     * @param Banque $banque
+     *
+     * @return User
+     */
+    public function addCompte(Compte $compte): self
+    {
+        if (!$this->compte->contains($compte)) {
+            $this->compte->add($compte);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove banque
+     *
+     * @param Banque $banque
+     */
+    public function removeCompte($compte): self
+    {
+        if ($this->compte->contains($compte)) {
+            $this->compte->removeElement($compte);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get Compte
+     *
+     * @return Collection
+     */
+    public function getCompte(): Collection
+    {
+        return $this->compte;
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**
@@ -240,59 +285,5 @@ class User implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    /**
-     * Add banque
-     *
-     * @param Banque $banque
-     *
-     * @return User
-     */
-    public function addBanque(Banque $banque) : User
-    {
-        $this->banque->add($banque);
-
-        return $this;
-    }
-
-    /**
-     * Remove banque
-     *
-     * @param Banque $banque
-     */
-    public function removeBanque(Banque $banque)
-    {
-        $this->banque->removeElement($banque);
-    }
-
-    /**
-     * Get banque
-     *
-     * @return Collection
-     */
-    public function getBanque() : Collection
-    {
-        return $this->banque;
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

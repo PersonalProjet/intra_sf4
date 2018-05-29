@@ -30,14 +30,7 @@ class Banque
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="banque", cascade={"persist"})
-     */
-    private $user;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Compte", mappedBy="banque")
+     * @ORM\OneToMany(targetEntity="Compte", mappedBy="banque", fetch="EAGER")
      */
     private $compte;
 
@@ -46,7 +39,6 @@ class Banque
      */
     public function __construct() {
         $this->compte = new ArrayCollection();
-        $this->user = new ArrayCollection();
     }
 
     /**
@@ -71,37 +63,6 @@ class Banque
     public function setName(string $name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @param User $user
-     *
-     * @return $this
-     */
-    public function addUser(User $user) : Banque
-    {
-        $this->user->add($user);
-        return $this;
-    }
-
-    /**
-     * Remove banque
-     *
-     * @param User $banque
-     */
-    public function removeUser(User $user)
-    {
-        $this->user->removeElement($user);
-    }
-
-    /**
-     * Get user
-     *
-     * @return Collection
-     */
-    public function getUser() : Collection
-    {
-        return $this->user;
     }
 
     /**

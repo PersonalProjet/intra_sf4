@@ -13,15 +13,4 @@ class BanqueRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Banque::class);
     }
-
-    public function findBanqueByUser($id)
-    {
-        return $this->createQueryBuilder('b')
-            ->innerJoin('b.user', 'user')
-            ->where('user = :value')->setParameter('value', $id)
-            ->orderBy('b.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-            ;
-    }
 }

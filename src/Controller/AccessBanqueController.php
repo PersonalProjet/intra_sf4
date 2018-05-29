@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserCompteType;
+use App\Repository\CompteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,35 +16,34 @@ use App\Repository\BanqueRepository;
 /**
  * @Route("/admin/assos")
  */
-class UserBanqueController extends AbstractController
+class AccessBanqueController extends AbstractController
 {
     /**
-     * @Route("/", name="user_banque_new")
+     * @Route("/compte", name="user_compte_new")
      */
-    public function new(Request $request, BanqueRepository $banqueRepository): Response
+    public function accessCompte(Request $request, CompteRepository $compteRepository): Response
     {
         $user = $this->getUser();
-        $banques = $banqueRepository->findBanqueByUser($user->getId());
-        $form = $this->createForm(UserBanqueType::class, $banques);
+        $comptes = $user->getCompte();
+        $form = $this->createForm(UserCompteType::class, $comptes);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $datas = $request->request->get('user_banque')['name'];
+            $datas = $request->request->get('user_compte')['name'];
 
             if (!empty($datas)){
                 $em = $this->getDoctrine()->getManager();
 
-                foreach($banques as $banque){
-                    $banque = $banqueRepository->find($banque->getId());
-                    $user->removeBanque($banque);
+                foreach($comptes as $compte){
+                    $user->removeCompte($compte);
                 }
 
                 $em->persist($user);
                 $em->flush();
 
                 foreach($datas as $id){
-                    $banque = $banqueRepository->find($id);
-                    $user->addBanque($banque);
+                    $compte = $compteRepository->find($id);
+                    $user->addCompte($compte);
                 }
 
                 $em->persist($user);
@@ -49,8 +51,8 @@ class UserBanqueController extends AbstractController
             }
         }
 
-        return $this->render('userbanque/new.html.twig', [
-            'banques' => $banques,
+        return $this->render('accessbanque/compte.html.twig', [
+            'comptes' => $comptes,
             'form' => $form->createView(),
         ]);
     }
