@@ -37,9 +37,11 @@ Encore
     .addEntry('app', [
         // JS
         'jquery',
+        'select2',
         './assets/js/app.js',
 
         // CSS
+        './assets/vendor/select2.min.css',
         './assets/css/app.css'
     ])
 
