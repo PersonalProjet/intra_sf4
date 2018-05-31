@@ -75,7 +75,7 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
-     * @var Compte
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Compte", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinTable(name="user_compte",
@@ -85,11 +85,19 @@ class User implements UserInterface, \Serializable
      */
     private $compte;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Transaction", mappedBy="user")
+     */
+    private $transaction;
+
     public function __construct()
     {
         $this->isActive = true;
         $this->roles = array('ROLE_USER');
         $this->compte = new ArrayCollection();
+        $this->transaction = new ArrayCollection();
     }
 
     /**
@@ -285,5 +293,36 @@ class User implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getTransaction(): Collection
+    {
+        return $this->transaction;
+    }
+
+    public function addTransaction(Transaction $transaction): self
+    {
+        if (!$this->transaction->contains($transaction)) {
+            $this->transaction[] = $transaction;
+            $transaction->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransaction(Transaction $transaction): self
+    {
+        if ($this->transaction->contains($transaction)) {
+            $this->transaction->removeElement($transaction);
+            // set the owning side to null (unless already changed)
+            if ($transaction->getUser() === $this) {
+                $transaction->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
